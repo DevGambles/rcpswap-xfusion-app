@@ -1,0 +1,37 @@
+import { ChainId, Currency, ETHER, BINANCE_COIN, WETH, MATIC_TOKEN } from '@rcpswap/sdk'
+import { NETWORK_CHAIN_ID } from '../connectors'
+
+export default function baseCurrencies(chainId: ChainId | undefined): Currency[] {
+  const currencies: Currency[] = []
+
+  if (chainId) {
+    switch (chainId) {
+      case 56:
+      case 97:
+        currencies.push(BINANCE_COIN)
+        currencies.push(WETH[chainId])
+        break
+      case 137:
+        currencies.push(MATIC_TOKEN)
+        currencies.push(WETH[chainId])
+        break
+      case 42170:
+        currencies.push(ETHER)
+        currencies.push(WETH[chainId])
+        break
+      case 1666700000:
+        currencies.push(ETHER)
+        currencies.push(WETH[chainId])
+        break
+      default:
+        currencies.push(ETHER)
+        currencies.push(WETH[chainId])
+        break
+    }
+  } else {
+    currencies.push(ETHER)
+    currencies.push(WETH[NETWORK_CHAIN_ID as ChainId])
+  }
+
+  return currencies
+}
